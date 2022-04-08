@@ -5,6 +5,8 @@ import { ButtonModule } from 'primeng/button';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile/profile.component';
@@ -28,8 +30,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     TabMenuModule,
     ReactiveFormsModule,
     InputTextModule, 
-    DialogModule
+    DialogModule,
+    ToastModule
   ], 
-  providers: []
+  providers: [
+    MessageService
+  ]
 })
 export class ProfileModule { }

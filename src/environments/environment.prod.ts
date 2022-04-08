@@ -1,5 +1,5 @@
 export const environment = {
   production: true, 
-  apiUrl: "https://api.peek.fan", 
+  apiUrl: "https://tattoo-508-api.herokuapp.com", 
   passwordLength: 8,
 };

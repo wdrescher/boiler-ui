@@ -22,7 +22,7 @@ const routes: Routes = [
       {
         path: "", canActivate: [MustBeLoggedInGuard, UserGuard], children: [
           { path: AppState.GALLERY, component: GalleryComponent },
-          { path: AppState.PROFILE, loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)}
+          { path: AppState.PROFILE, loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)}, 
         ]
       },
     ]

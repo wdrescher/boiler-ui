@@ -36,7 +36,7 @@ export class SettingsComponent implements OnInit {
     { label: SettingsState.AccountSettings, icon: 'pi pi-user', routerLink: this._navigate(AppState.ACCOUNT_SETTINGS), routerLinkActiveOptions: {exact: true} },
     { label: SettingsState.Password, icon: 'pi pi-lock', routerLink: this._navigate(AppState.PASSWORD_SETTINGS) },
     // { label: SettingsState.Billing, icon: 'pi pi-credit-card', routerLink: this._navigate(AppState.BILLING_SETTINGS) },
-    { label: SettingsState.Address, icon: 'pi pi-home', routerLink: this._navigate(AppState.ADDRESS_SETTINGS) }
+    // { label: SettingsState.Address, icon: 'pi pi-home', routerLink: this._navigate(AppState.ADDRESS_SETTINGS) }
   ]
 
   constructor(
@@ -100,52 +100,7 @@ export class SettingsComponent implements OnInit {
         hideField: true
       },
     ]
-
-    // let addressSettings: SettingItem[] = [
-    //   {
-    //     label: "Address",
-    //     previousValue: this._userStateService.addressLine1,
-    //     formControlName: "street_address",
-    //     validators: [Validators.required],
-    //     type: 'text',
-    //     errorCode: "Please enter a street address",
-    //   },
-    //   {
-    //     label: "Address: Line 2",
-    //     previousValue: this._userStateService.addressLine2,
-    //     formControlName: 'street_address_line_2',
-    //     validators: [],
-    //     type: 'text',
-    //     errorCode: "Please enter address line 2"
-    //   },
-    //   {
-    //     label: "City",
-    //     previousValue: this._userStateService.city,
-    //     formControlName: 'city',
-    //     validators: [Validators.required],
-    //     type: 'text',
-    //     errorCode: "Please enter a valid city"
-    //   },
-    //   {
-    //     label: "State or Province",
-    //     previousValue: this._userStateService.stateOrProvince,
-    //     formControlName: 'state_or_province',
-    //     validators: [Validators.required],
-    //     type: 'text',
-    //     errorCode: "Please enter a valid state or province"
-    //   },
-    //   {
-    //     label: "Country",
-    //     options: COUNTRIES,
-    //     previousValue: COUNTRIES.find( elem => elem.code === (!!this._userStateService.country ? this._userStateService.country : 'US')),
-    //     formControlName: 'country',
-    //     validators: [Validators.required],
-    //     type: 'select',
-    //     errorCode: "Please enter a valid country",
-    //     isCountry: true
-    //   }
-    // ]
-
+    
     this.settingMap = {
       "Account": {
         formGroup: this.createFormGroup(accountSettings),
@@ -154,11 +109,7 @@ export class SettingsComponent implements OnInit {
       "Password": {
         formGroup: this.createFormGroup(securitySettings),
         settings: securitySettings
-      },
-      // 'Address': {
-      //   formGroup: this.createFormGroup(addressSettings),
-      //   settings: addressSettings
-      // }
+      }
     }
 
     this._activatedRoute.data.subscribe((response) => {
@@ -173,22 +124,32 @@ export class SettingsComponent implements OnInit {
       return;
     }
     if (this.pageState === SettingsState.Password) {
-
+      if(this.settingConfig.formGroup.valid) {
+        const new_password = this.settingConfig.formGroup.controls['password'].value;
+        this._settingsService.changePassword(new_password).subscribe(
+          () => {
+            this.settingConfig.formGroup.reset(); 
+            this.isLoading = false; 
+            this._messageService.add({severity:'success', summary:'Successfully updated password'});
+          }, 
+          () => {
+            this._appStateService.displayErrorModal = true; 
+          }
+        )
+      }
     }
     else { //pages correlated to update user endpoint
       this.isLoading = true;
       if (this.settingConfig.formGroup.valid) {
-        let data = this.createUpdateBody();
+        let data = {
+          first_name: this.settingConfig.formGroup.controls['first_name'].value,
+          last_name: this.settingConfig.formGroup.controls["last_name"].value
+        }
         this._settingsService.updateUser(this._userStateService.username, data)
           .pipe(take(1))
           .subscribe(
             (response: User) => {
-              let message: Message = {
-                closable: true, 
-                severity: "success", 
-                data: "Account updated"
-              }
-              this._messageService.add(message)
+              this._messageService.add({severity: 'success', summary: 'Successfully updated account'})
               this.setNewValues(response);
               this.isLoading = false;
             },

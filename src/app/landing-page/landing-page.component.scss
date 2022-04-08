@@ -41,10 +41,14 @@ $border-width: 1px;
 
     &__form {
         width: 100%; 
-        display: flex;
-        flex-flow: column nowrap;
-        align-items: flex-start;
-        justify-content: center;
+        display: flex; 
+        align-items: center;
+        flex-flow: column nowrap; 
+
+        & tui-input {
+            margin-bottom: 1rem;
+            width: 100%;
+        }
 
         &-input-container {
             display: flex;
@@ -159,7 +163,7 @@ $border-width: 1px;
             font-size: 12px; 
             font-weight: $normal; 
             color: $error-red; 
-            height: 12px; 
+            height: 24px; 
             margin: auto;
 
             &--fade {

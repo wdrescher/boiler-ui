@@ -12,6 +12,7 @@ import { LoginSuccessResponse, ValidateTokenSuccessResponse } from '../services/
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppStateService } from '../services/app-state.service';
 import { AUTH_TOKEN_KEY, AWAITING_VERIFICATION_KEY, PASSWORD_LENGTH } from '../app.constants';
+import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 
 interface LandingPageConfig {
   color: string; 
@@ -24,7 +25,17 @@ interface LandingPageConfig {
 @Component({
   selector: 'tattoo-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss']
+  styleUrls: ['./landing-page.component.scss'], 
+  providers: [
+    {
+      provide: TUI_VALIDATION_ERRORS, 
+      useValue: {
+        required: 'Value required.', 
+        email: 'Valid email addresses only.',
+        minLength: ((context: {min: number}): string => `Enter ${context.min} characters or more.`),
+      }
+    }
+  ]
 })
 export class LandingPageComponent implements OnInit {
 
@@ -74,12 +85,10 @@ export class LandingPageComponent implements OnInit {
     username: 'Email',
     password: 'Password',
     confirmPassword: 'Matching Password',
-    first_name: "First Name", 
-    last_name: "Last Name"
   };
   private _pageState = LandingPageState.LOGIN;
   private _controlNames = [
-    'username', 'password', 'confirmPassword', 'last_name', 'first_name'
+    'username', 'password', 'confirmPassword'
   ];
   private _token: string;
   private _nextRoute: string;
@@ -121,11 +130,9 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      username: ['', Validators.email],
+      username: ['', [Validators.required, Validators.email]],
       password: [''],
       confirmPassword: [''], 
-      first_name: [''], 
-      last_name: ['']
     });
     this._checkToken();
     this.activatedRoute.data.subscribe( param => {
@@ -176,22 +183,25 @@ export class LandingPageComponent implements OnInit {
         window.analytics.track('click:signup');
         const controls = this.formGroup.controls;
         let username = controls["username"].value; 
-        let password = controls["password"].value; 
-        let first_name = controls["first_name"].value; 
-        let last_name = controls["last_name"].value;
+        let password = controls["password"].value;
         this.authService.registerUser(
           username.toString().toLowerCase(),
           password, 
-          first_name, 
-          last_name
+          '', 
+          'last_name'
         )
         .pipe(take(1))
         .subscribe(
           () => {
             window.analytics.track("new user")
-            this.isLoading = false;
-            this._userStateService.tempLogin(username);
-            this.router.navigateByUrl(AppState.GALLERY)
+            this.authService.attemptLogin(username, password)
+            .pipe(take(1))
+            .subscribe(
+              (response: LoginSuccessResponse) => {
+                this.isLoading = false;
+                this._login(response.access_token);
+              }
+            )
           },
           (response: HttpErrorResponse) => {
             if (response.status === 409) {
@@ -295,25 +305,6 @@ export class LandingPageComponent implements OnInit {
     return (control.dirty || control.touched) && control.invalid;
   }
 
-  get errors(): string {
-    for (const controlIndex in this._controlNames) {
-      const controlName = this._controlNames[controlIndex];
-      const control = this.formGroup.controls[controlName];
-      if (control.errors && this.isInvalid(controlName)) {
-        if (controlName === 'confirmPassword' && this.formGroup.controls['password'].value !== control.value) {
-          return 'Passwords do not match';
-        }
-        else if (controlName === 'password' && control.value.length <= 8) {
-          return 'Enter 8 or more characters';
-        }
-        return `Please enter a valid ${this._controlNameMapping[controlName]}`;
-      }
-    }
-    return '';
-  }
-
-
-
   get isLogin(): boolean {
     return this._pageState === LandingPageState.LOGIN;
   }
@@ -339,18 +330,16 @@ export class LandingPageComponent implements OnInit {
     switch (state) {
       case LandingPageState.LOGIN:
         this.formGroup.controls.confirmPassword.clearValidators();
-        this.formGroup.controls.password.setValidators(Validators.minLength(PASSWORD_LENGTH));
+        this.formGroup.controls.password.setValidators([Validators.required, Validators.minLength(PASSWORD_LENGTH)]);
         break;
       case LandingPageState.SET_PASSWORD:
       case LandingPageState.RESET_PASSWORD:
         this.formGroup.controls.confirmPassword.setValidators(LandingPageComponent.matchValues("password"));
-        this.formGroup.controls.password.setValidators(Validators.minLength(PASSWORD_LENGTH));
+        this.formGroup.controls.password.setValidators([Validators.required, Validators.minLength(PASSWORD_LENGTH)]);
         return;
       case LandingPageState.SIGNUP:
-        this.formGroup.controls.first_name.setValidators(Validators.required), 
-        this.formGroup.controls.last_name.setValidators(Validators.required),
         this.formGroup.controls.confirmPassword.setValidators(LandingPageComponent.matchValues("password"));
-        this.formGroup.controls.password.setValidators(Validators.minLength(PASSWORD_LENGTH));
+        this.formGroup.controls.password.setValidators([Validators.required, Validators.minLength(PASSWORD_LENGTH)]);
       default:
         return;
     }
@@ -372,7 +361,7 @@ export class LandingPageComponent implements OnInit {
         !!control.parent.value &&
         control.value === control.parent.controls[matchTo].value
         ? null
-        : { isMatching: false };
+        : { other: "Passwords do not match." };
     };
   }
 }

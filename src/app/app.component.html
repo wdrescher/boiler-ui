@@ -1,9 +1,10 @@
+<tui-root>
 <div class="peek" *ngIf="!isLoading">
     <tattoo-header></tattoo-header>
     <div class="tattoo-inside" style="height:100%">
         <router-outlet ></router-outlet>
     </div>
-    <tattoo-footer></tattoo-footer>
+    <!-- <tattoo-footer></tattoo-footer> -->
     <p-dialog header="Upload" [(visible)]="displayUploadModal" [dismissableMask]="true" [showHeader]="true" [focusTrap]="true" [draggable]="false" [modal]="true">
         <tattoo-upload></tattoo-upload>
     </p-dialog>
@@ -15,3 +16,5 @@
 <div class="peek__loading" *ngIf="isLoading">
     <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
 </div>
+
+</tui-root>

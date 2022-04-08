@@ -26,13 +26,8 @@ export class NavigationComponent implements OnInit {
       class: 'pi pi-home'
     },
     {
-      name: 'New',
-      route: AppState.SETUP,
-      class: 'pi pi-plus-circle',
-    },
-    {
-      name: 'Discover',
-      route: AppState.GALLERY,
+      name: 'Appointments',
+      route: AppState.BOOKINGS,
       class: 'pi pi-th-large'
     },
     {
@@ -47,7 +42,6 @@ export class NavigationComponent implements OnInit {
   constructor(
     private _router: Router,
     private _userStateService: UserStateService, 
-    private _appStateService: AppStateService
   ) { }
 
   ngOnInit(): void {

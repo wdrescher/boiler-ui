@@ -27,9 +27,16 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@taiga-ui/icons/src",
+                "output": "assets/taiga-ui/icons"
+              }
             ],
             "styles": [
+              "node_modules/@taiga-ui/core/styles/taiga-ui-global.less",
+              "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
               "./node_modules/primeicons/primeicons.css",
               "./node_modules/primeng/resources/themes/bootstrap4-light-blue/theme.css",
               "./node_modules/primeflex/primeflex.css",
