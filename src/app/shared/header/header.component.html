@@ -1,0 +1,13 @@
+<div class="tattoo-header">
+    <div class="tattoo-header__resizer">
+        <div class="tattoo-header__container">
+            <tattoo-logo></tattoo-logo>
+        </div>
+        <div class="tattoo-header__container">
+            <div class="tattoo-header__container tattoo-header__navigation">
+                <tattoo-navigation style="width: 100%"></tattoo-navigation>
+            </div>
+            <button pButton icon="pi pi-sign-out" *ngIf="displaySignout" class="p-button-rounded p-button-text p-button-plain p-button-lg" (click)="signout()"></button>
+        </div>
+    </div>
+</div>

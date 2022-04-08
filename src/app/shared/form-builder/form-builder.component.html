@@ -1,0 +1,17 @@
+<form [formGroup]="formGroup">
+    <div class="form-builder__form-item" *ngFor="let item of settings" style="margin-bottom: 12px">
+        <label [for]="item.formControlName">{{item.label}}</label>
+        <div *ngIf="item.readOnly" style="margin-left: 12px; margin-top: 8px">
+            {{item.previousValue}}
+        </div>
+        <input *ngIf="(item.type === 'text' || item.type === 'password') && !item.readOnly" [id]="item.formControlName"
+            [formControlName]="item.formControlName" [type]="item.type" pInputText class="form-builder__table-input"
+            style="width:100%">
+
+        <p-dropdown *ngIf="!item.readOnly && item.type === 'select'" [options]="item.options"
+            [formControlName]="item.formControlName" [style]="{'width': '100%'}" [filter]="true"
+            [id]="item.formControlName" optionLabel="name"></p-dropdown>
+        <small [id]="item.formControlName" *ngIf="displayError(formGroup, item.formControlName)"
+            class="p-error">{{item.errorCode}}</small>
+    </div>
+</form>

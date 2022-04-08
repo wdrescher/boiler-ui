@@ -1,0 +1,15 @@
+<div *ngIf="awaitingVerification" class="tattoo-gallery-verify">
+    <div class="tattoo-gallery-verify__text">
+        Verify your email now to get full access
+    </div>
+    <p-button (click)="resendEmail()" [icon]="iconText">
+        <div *ngIf="!isResendEmailLoading">{{buttonText}}</div>
+        <i *ngIf="isResendEmailLoading" class="pi pi-spin pi-spinner"></i>
+    </p-button>
+</div>
+<div class="tattoo-gallery">
+    <div class="tattoo-gallery__container">
+        <ng-container *ngFor="let tile of feed; let i = index">
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+/* You can add global styles to this file, and also import other style files */
+html, body {
+    //font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: unset !important; 
+    line-height: unset !important; 
+    color: unset !important; 
+    text-align: unset !important; 
+    background-color: var(--surface-b); 
+}
+
+div {
+    font-family: 'Open Sans', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell !important; 
+    color: var(--text-color); 
+}
+
+.button-unstyled {
+    appearance:unset;
+    -webkit-writing-mode:unset;
+    text-rendering:unset;
+    color:unset;
+    letter-spacing:unset;
+    word-spacing:unset;
+    text-transform:unset;
+    text-indent:unset;
+    text-shadow:unset;
+    display:unset;
+    text-align:unset;
+    align-items:unset;
+    cursor:unset;
+    background-color:unset;
+    box-sizing:unset;
+    margin:unset;
+    font:unset;
+    padding:unset;
+    border-width:unset;
+    border-style:unset;
+    border-color:unset;
+    border-image:unset;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+}
+
+label {
+    color: var(--text-color); 
+}
+
+// shared vars
+$header-height: 80px; 
+
+// colors
+$lightest-blue: #F6F9FF;
+$light-blue: #EBF0F5;
+$blue-tile: #D2E5F9;
+$blue-hover: #105AE1;
+$mid-blue: #5B6978;
+$darkest-blue: #1A202C;
+$demo-blue: #DFE6EC;
+$dark-blue: #2D3748; 
+$dark-divider: #475166; 
+$eggshell-white: #EBF0F5;
+$white: #FFFFFF; 
+$background-white: #F8FAFC;
+$error-red: #EC2E2E;
+$light-gray: #78899A; 
+$disabled-gray: #99A6B2;
+$disabled-button: #D4DCE4;
+$light-white: #EBF0F5; 
+$text-gray: #4E5B6F; 
+
+$contrast-color: var(--text-color); 
+
+// font weights 
+$bold: 500;
+$semi-bold: 500;
+$normal: 400; 
+$light: 100; 
+$medium: 500; 
+
+$upload-row-width: 326px; 
+
+@mixin button-row {
+    width: 100%;
+    max-width: $upload-row-width; 
+
+    @media screen and (max-width: 576px) {
+        max-width: 220px; 
+    }
+}
+
+@mixin max-width {
+    width: 80%; 
+    max-width: 1400px; 
+    
+    @media screen and (max-width: 600px) {
+        width: 100%;
+        padding: 16px; 
+        box-sizing: border-box;
+    }
+}
+
+.tattoo-text {
+    &-heading-1 {
+        color: var(--text-color); 
+        font-size: 48px; 
+        font-weight: $bold; 
+    }
+
+    &-heading-2 {
+        color: var(--text-color); 
+        font-size: 24px; 
+        font-weight: $medium; 
+    }
+
+    &-heading-3 {
+        color: var(--text-color); 
+        font-size: 18px; 
+        font-weight: $medium; 
+    }
+
+    &-heading-4 {
+        color: var(--text-color); 
+        font-size: 16px; 
+        font-weight: $normal; 
+    }
+
+    &-sub-title {
+        color: var(--text-color); 
+        font-size: 18px; 
+        font-weight: 700; 
+        margin-left: 12px; 
+    }
+
+    &-body {
+        color: var(--text-color); 
+        font-size: 14px; 
+        font-weight: $normal; 
+    }
+
+    &-light {
+        color: var(--text-color); 
+        font-size: 14px; 
+        font-weight: $light;
+    }
+}

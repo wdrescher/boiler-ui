@@ -1,0 +1,8 @@
+<div class="file-upload">
+    <label *ngIf="!imgURL || isLoading" [for]="id" class="file-upload__upload">
+        <span pButton [icon]="isLoading ? 'pi pi-spin pi-spinner' : 'pi pi-upload'"></span>
+    </label>
+    <input [id]="id" type="file" [accept]="accept" (change)="handleFileInput($event.target.files[0])"/>
+    <img *ngIf="!isLoading && !!imgURL && displayPreview" class="file-upload__img" [src]="imgURL" alt="" [ngStyle]="{'border-radius': roundDisplay ? displaySize / 2 + 'px' : '5px', 'width': displaySize, 'height': displaySize}">
+    <button *ngIf="!!imgURL" pButton iconPos="right" icon="pi pi-times" (click)="removeImage()" class="p-button-danger"></button>
+</div>

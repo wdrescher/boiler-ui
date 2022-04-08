@@ -1,0 +1,56 @@
+@import 'styles'; 
+
+.tattoo-header {
+    display: flex;
+    flex-flow: row nowrap; 
+    align-items: center;
+    justify-content: center;
+    background-color: var(--surface-a); 
+    width: 100%; 
+    height: $header-height;
+
+    &__resizer {
+        display: flex;
+        margin: auto;
+        @include max-width; 
+        flex-flow: row nowrap; 
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__logo {
+        font-weight: $bold; 
+        font-size: 48px;
+    }
+
+    &__container {
+        display: flex;
+        flex-flow: row nowrap; 
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    &__item {
+        font-size: 24px; 
+        font-weight: $normal; 
+        margin-left: 24px; 
+
+        @media screen and (max-width: 400px) {
+            margin: 0 24px 0 0;
+        }
+    }
+
+    &__navigation {
+        width: 400px;
+        margin-right: 24px;  
+
+        @media screen and (max-width: 800px) {
+            display: none;
+        }
+    }
+
+    &__signout {
+        font-size: 1.5rem; 
+        color: $contrast-color; 
+    }
+}

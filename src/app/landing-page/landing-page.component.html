@@ -1,0 +1,99 @@
+<div class="landing-page">
+    <div class="landing-page-container">
+        <div class="landing-page-container__title">{{config.title}}</div>
+        <form class="landing-page__form" [formGroup]="formGroup">
+            <ng-container *ngIf="!isReset && !isSetPassword">
+                <span class="p-float-label landing-page__form-input-span">
+                    <input class="landing-page__form-input" 
+                        required
+                        formControlName="username" 
+                        type="email" 
+                        name="username" 
+                        id="email"
+                        pInputText
+                    >
+                    <label for="email">Email</label>
+                </span>
+            </ng-container>
+            <ng-container *ngIf="isSetPassword">
+                <span class="p-float-label landing-page__form-input-span" style="margin-top: 24px">
+                    <input class="landing-page__form-input" 
+                        required
+                        formControlName="first_name" 
+                        type="text" 
+                        id="first_name"
+                        pInputText
+                    >
+                    <label for="first_name">First Name</label>
+                </span>
+                <span class="p-float-label landing-page__form-input-span" style="margin-top: 24px">
+                    <input class="landing-page__form-input" 
+                        required
+                        formControlName="last_name" 
+                        type="text" 
+                        name="last_name" 
+                        id="last_name"
+                        pInputText
+                    >
+                    <label for="last_name">Last Name</label>
+                </span>
+            </ng-container>
+            <ng-container *ngIf="isLogin || isReset || isSetPassword || isSignup"> 
+                <span class="p-float-label landing-page__form-input-span" style="margin-top: 24px">
+                    <input class="landing-page__form-input" 
+                        formControlName="password" 
+                        type="password" 
+                        name="password" 
+                        id="password"
+                        [ngClass]="{'landing-page__form-input--error': isInvalid('password')}"
+                        pInputText
+                    >
+                    <label for="password">Password</label>
+                </span>
+            </ng-container>
+
+            <ng-container *ngIf="isReset || isSetPassword || isSignup">
+                <span class="p-float-label landing-page__form-input-span" style="margin-top: 24px">
+                    <input
+                        pInputText
+                        formControlName="confirmPassword" 
+                        class="landing-page__form-input" 
+                        type="password" 
+                        name="confirmPassword" 
+                        id="confirmPassword"
+                        [ngClass]="{'landing-page__form-input--error': isInvalid('confirmPassword')}"
+                    >
+                    <label for="confirmPassword">Confirm Password</label>
+                </span>
+            </ng-container>
+            
+            <div class="landing-page__form-errors">
+                {{ errors }} 
+            </div>
+            <div class="landing-page__form-errors--fade" *ngIf="loginError != ''">
+                {{ loginError }}
+            </div>
+
+
+
+            <button *ngIf="!isLoading" pButton style="width:100%; margin-top: 12px;" type="submit" (click)="onSubmit()" [label]="config.buttonText">
+            </button>
+            <button pButton *ngIf="isLoading" style="width:100%; margin-top: 12px;" type="submit" (click)="onSubmit()" [icon]="'pi pi-spin pi-spinner'">
+            </button>
+            
+            <button *ngIf="isLogin" class="landing-page__form-message button-unstyled" (click)="forgotPassword()">
+                Forgot Password?
+            </button>
+
+            <div *ngIf="!!passwordResetMessage" class="landing-page__form-message">
+                {{passwordResetMessage}}
+            </div>
+
+            <div class="landing-page__form-message">{{config.message}}
+                <button class="button-unstyled" (click)="toggleState()">
+                    <div class="landing-page__form-message--link">{{config.secondaryButtonText}}</div>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

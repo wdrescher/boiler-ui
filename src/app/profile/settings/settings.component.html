@@ -1,0 +1,15 @@
+
+<div class="settings">
+    <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+    <div class="settings__container">
+        <form [formGroup]="settingConfig.formGroup" (ngSubmit)="submit()" class="settings__form" style="width: 100%">
+            <tattoo-form-builder style="width: 100%" [formGroup]="settingConfig.formGroup" [settings]="settingConfig.settings"></tattoo-form-builder>
+            <div class="settings__container-row" style="margin-top: 12px">
+                <button pButton type="submit" *ngIf="!isLoading" [disabled]="isDisabled" label="Save"
+                    style="margin-right: 12px"></button>
+                <button pButton *ngIf="isLoading" icon="pi pi-spin pi-spinner" style="margin-right: 12px"></button>
+                <button pButton type="button" [disabled]="!hasChanges" label="Undo" class="p-button-danger" (click)="reset()"></button>
+            </div>
+        </form>
+    </div>
+</div>

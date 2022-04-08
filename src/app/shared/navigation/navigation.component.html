@@ -1,0 +1,15 @@
+<div class="navigation" *ngIf="isLoggedIn">
+    <div class="navigation__tab button-unstyled" *ngFor="let tab of tabs; let i = index" (click)="navigate(tab)" [ngStyle]="{'margin-left': i === 0 ? '0' : '12px'}">
+        <ng-container *ngIf="(!!tab.isUpload && tab.isUpload()) && !postInProgress">
+            <input type="file" id="file" accept="image/*, video/*" (change)="fileChange($event.target.files[0])">
+            <label for="file">
+                <p-button pRipple type="button" [icon]="tab.class" styleClass="p-button-rounded p-button-text p-button-plain p-button-lg"></p-button>
+                <div class="navigation__tab-name">{{tab.name}}</div>
+            </label>
+        </ng-container>        
+        <ng-container *ngIf="(!tab.isUpload || (!!tab.isUpload && !tab.isUpload())) || postInProgress">   
+            <button pButton pRipple type="button" [icon]="tab.class" class="p-button-rounded p-button-text p-button-plain p-button-lg"></button>
+            <div class="navigation__tab-name">{{tab.name}}</div>
+        </ng-container>
+    </div>
+</div>

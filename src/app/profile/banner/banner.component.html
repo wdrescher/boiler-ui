@@ -1,0 +1,47 @@
+<div class="banner">
+    <div class="banner__row">
+        <div class="banner__col">
+            <div class="banner__row--bio">
+                <div class="banner__row-username">{{username}}</div>
+                <button *ngIf="edit" pButton style="margin-left: 12px;" class="p-button-rounded p-button-text"
+                    icon="pi pi-pencil" (click)="editUsername()"></button>
+            </div>
+            <div class="banner__row--bio">
+                <ng-container *ngIf="!bioEdit">
+                    <div class="banner__bio">{{bio}}</div>
+                    <button *ngIf="edit && isUserProfile" pButton style="margin-left: 12px;" class="p-button-rounded p-button-text"
+                        icon="pi pi-pencil" (click)="toggleBioEdit()"></button>
+                </ng-container>
+
+                <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" *ngIf="bioEdit && isUserProfile">
+                    <input pInputText style="width:60%" type="text" formControlName="bio">
+                    <button pButton *ngIf="!isLoading" type="submit" icon="pi pi-check"
+                        class="p-button-rounded p-button-text"></button>
+                    <button pButton *ngIf="isLoading" icon="pi pi-spin pi-spinner"
+                        class="p-button-rounded p-button-text"></button>
+                    <button pButton type="button" icon="pi pi-times" (click)="toggleBioEdit()"
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+                </form>
+            </div>
+            <div *ngIf="isUserProfile" pButton style="width: 100%; margin-top: 8px; max-width: 150px"
+                [class]="edit ? 'p-button-warning' : 'p-button-secondary'" [icon]="edit ? 'pi pi-times' : 'pi pi-cog'"
+                [label]="edit ? '' : 'Edit Profile'" iconPos="right" (click)="toggleEdit()">
+            </div>
+        </div>
+    </div>
+
+    <div class="banner__row" style="width:unset">
+        <div class="banner__item" *ngFor="let count of counts; let i = index"
+            [ngStyle]="{'margin-left': i === 0 ? '' : '24px'}">
+            <ng-container *ngIf="!count.isSpacer">
+                <div class="banner__item-count">
+                    {{count.count}}
+                </div>
+                <div class="banner__item-description">
+                    {{count.description}}
+                </div>
+            </ng-container>
+            <div *ngIf="count.isSpacer" class="banner__spacer"></div>
+        </div>
+    </div>
+</div>

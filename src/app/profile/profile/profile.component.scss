@@ -1,0 +1,6 @@
+@import 'styles'; 
+
+.profile {
+    @include max-width; 
+    margin: auto; 
+}

@@ -1,0 +1,78 @@
+@import 'styles'; 
+
+$row-height: 45px; 
+.settings {
+    width: 100%; 
+    margin-bottom: 24px; 
+    overflow-x: scroll;
+ 
+    @media screen and (max-width: 405px) {
+        background-color: var(--surface-a); 
+        border-radius: 4px 4px 0 0; 
+    }
+
+    &__container {
+        display: flex; 
+        flex-flow: column nowrap; 
+        padding: 16px; 
+        padding: 24px; 
+        background-color: var(--surface-a); 
+        border-radius: 0 5px 5px 5px;
+
+        &-row {
+            display: flex;
+            flex-flow: row wrap; 
+            align-items: center;
+            justify-content: flex-start;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-flow: column nowrap; 
+        align-items: flex-start; 
+        justify-content: flex-start;
+        width: 100%; 
+        // padding: 12px;
+
+        &-item {
+            @extend .settings__form;
+            width: 100%; 
+        }
+    }
+
+    &__table {
+        &-title {
+            width: 100px; 
+            @media screen and (max-width: 576px) {
+                width: 50px; 
+            }
+        }
+
+        &-inplace {
+            display: flex;
+            flex-flow: row wrap; 
+            align-content: center;
+            justify-content: flex-start;
+        }
+
+        &-row {
+            height: $row-height; 
+        }
+
+        &-new {
+            height: $row-height;
+            display: flex;
+            flex-flow: row nowrap; 
+            align-items: center;
+            width: 100%; 
+            justify-content: flex-start;
+        }
+
+        &-input {
+            @media screen and (max-width: 576px) {
+                width: 50%; 
+            }
+        }
+    }
+}

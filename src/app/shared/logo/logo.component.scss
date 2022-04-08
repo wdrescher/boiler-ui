@@ -1,0 +1,40 @@
+@import 'styles'; 
+
+$logo-color: var(--primary-color);
+.tattoo-logo {
+    display: flex;
+    flex-flow: row nowrap; 
+    align-items: center;
+    justify-content: flex-start;
+
+
+
+    &__img {
+        color: white; 
+        background-color: $logo-color; 
+        border-radius: 3px; 
+        height: 40px; 
+        width: 40px; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px; 
+
+        @media screen and (max-width: 400px) {
+            font-size: 16px; 
+            height: 24px; 
+            width: 24px; 
+        }
+    }
+
+    &__text {
+        font-size: 52px; 
+        font-weight: 600; 
+        margin-left: 12px; 
+        color: $logo-color;
+
+        @media screen and (max-width: 400px) {
+            font-size: 24px; 
+        }
+    }
+}

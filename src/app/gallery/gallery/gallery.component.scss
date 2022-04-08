@@ -1,0 +1,40 @@
+@import 'styles'; 
+
+.tattoo-gallery {
+    min-height: 100%; 
+    @include max-width; 
+    margin: auto;
+
+    &__container {
+        display: flex;
+        flex-flow: column nowrap; 
+        align-items: center;
+        margin: 24px 0;
+    }
+
+    &-verify {
+        display: flex;
+        flex-flow: row nowrap; 
+        align-items: center;
+        justify-content: center;
+        background-color: $blue-tile; 
+        padding: 12px; 
+        box-sizing: border-box;
+        position: sticky;
+        top: 0; 
+        margin-bottom: 12px; 
+
+        &__text {
+            font-size: 18px; 
+            color: $dark-blue; 
+            margin-right: 24px; 
+        }
+    }
+
+    &__skeleton {
+        background-color:white; 
+        border-radius: 5px; 
+        padding: 24px; 
+        width: 100%; 
+    }
+}

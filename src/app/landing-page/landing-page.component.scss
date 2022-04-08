@@ -1,0 +1,177 @@
+@import 'styles'; 
+
+$border-width: 1px; 
+.landing-page {
+    width: 100%; 
+    min-height: 80vh;
+    display: flex;
+    flex-flow: column nowrap; 
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: 400px) {
+       justify-content: flex-start;
+    }
+
+    &-container { 
+        @media screen and (max-width: 700px) {
+            width: unset; 
+            padding: 16px; 
+            margin: 16px auto; 
+        }
+
+        box-sizing: border-box;
+        display: flex;
+        flex-flow: column nowrap; 
+        justify-content: center;
+        align-items: center;
+        background-color: var(--surface-a);
+        width: 480px; 
+        padding: 48px 36px;
+        border-radius: 10px; 
+        box-shadow: 0px 8px 20px rgba(26, 32, 44, 0.15);
+        margin: 36px auto;
+
+        &__title {
+            color: var(--text-color); 
+            font-weight: $bold; 
+            font-size: 24px; 
+            margin-bottom: 40px; 
+        }
+    }
+
+    &__form {
+        width: 100%; 
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        justify-content: center;
+
+        &-input-container {
+            display: flex;
+            flex-flow: row wrap; 
+            justify-content: space-between;
+            width: 100%;
+
+            &__half-input {
+                @extend .landing-page__form-input; 
+                flex-grow: 1; 
+                width: 50% !important; 
+            }
+        }
+
+        &-label {
+            font-size: 14px; 
+            font-weight: $medium;
+            color: $mid-blue;
+        }
+
+        &-input {
+            padding: 8px; 
+            width: 100%; 
+
+            &-span {
+                width: 100%;
+            }
+        }
+
+        &-message {
+            font-weight: $medium; 
+            font-size: 14px; 
+            color: $light-gray; 
+            margin: 24px auto 0; 
+
+            &--link {
+                @extend .landing-page__form-message;
+                font-weight: $medium;
+                margin-top: unset;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        &-submit {
+            box-sizing: border-box;
+            font-weight: $medium;
+            font-size: 16px; 
+            background-color: black; 
+            width: 100%; 
+            height: 45px; 
+            border-radius: 4px; 
+            text-align: center;
+            color: $white; 
+            padding: 10px 0; 
+            margin: 10px auto 10px; 
+            border: $border-width solid transparent; 
+            transition: all .5s ease-in-out;
+        }
+
+        
+        &-google {
+            display: flex;
+            width: 100%; 
+            padding: 12px 8px; 
+            background-color: $light-blue; 
+            align-items: center;
+            box-sizing: border-box; 
+            border-radius: 5px;
+            justify-content: center;
+            border: unset;
+
+            &-icon {
+                position: absolute;
+                width: 20px; 
+                transform: translateX(-900%); 
+                @media screen and (max-width: 700px) {
+                    transform: translateX(-500%);
+                }
+            }
+            &-text {
+                color: $mid-blue;
+                font-weight: $medium;
+                font-size: 16px;
+            }
+        }
+
+        &-change-type {
+            box-sizing: border-box;
+            font-weight: $normal;
+            font-size: 12px; 
+            background-color: $light-gray; 
+            width: 100%; 
+            border-radius: 4px; 
+            text-align: center;
+            color: $white; 
+            padding: 10px 0; 
+            margin: 10px auto 0; 
+            border: $border-width solid transparent; 
+            transition: all .5s ease-in-out;
+        }
+
+        // &-change-type:hover {
+        //     transition: all .2s ease-in-out;
+        //     color: $light-gray; 
+        //     border: $border-width solid $light-gray; 
+        //     background-color: $eggshell-white; 
+        // }
+
+        &-errors {
+            font-size: 12px; 
+            font-weight: $normal; 
+            color: $error-red; 
+            height: 12px; 
+            margin: auto;
+
+            &--fade {
+                @extend .landing-page__form-errors;
+                animation: fade .4s ease forwards 1s; 
+                opacity: 1;
+                @keyframes fade {
+                    25% { opacity: 1 }
+                    75% { opacity: 0}
+                    100%{ height: 0; opacity: 0;}
+                  }
+            }
+        }
+    }
+}
