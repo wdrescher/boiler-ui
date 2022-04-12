@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/htt
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ErrorResponse, LoginSuccessResponse, RegisterUserRequest, ValidateTokenSuccessResponse } from './reqeusts.interface';
+import { ErrorResponse, LoginSuccessResponse, RegisterUserRequest, TokenValidationResponse, ValidateTokenSuccessResponse } from './reqeusts.interface';
 import { API_URL } from 'src/app/app.constants';
 import { map } from 'rxjs/operators';
 import { User } from '../app.interface';
@@ -16,10 +16,10 @@ export class AuthService {
     private http: HttpClient,
   ) { }
 
-  validateToken(token: string): Observable<ValidateTokenSuccessResponse | HttpErrorResponse> {
-    return this.http.get(`${API_URL}/v1/email/verification/validate?token=${token}`).pipe(
+  validateToken(token: string): Observable<TokenValidationResponse | HttpErrorResponse> {
+    return this.http.get(`${API_URL}/api/email/validate?token=${token}`).pipe(
       map(
-        (res: ValidateTokenSuccessResponse) => {
+        (res: TokenValidationResponse) => {
           return res; 
         }, 
         (err: ErrorResponse) => {
@@ -83,10 +83,10 @@ export class AuthService {
   }
 
   forgotPassword(email: string): Observable<HttpResponse<null>|HttpErrorResponse> {
-    let data = {
+    const data = {
       email: email
     }
-    return this.http.post(`${API_URL}/v1/email/reset_password`, data)
+    return this.http.post(`${API_URL}/api/email/reset-password`, data)
       .pipe(
         map(
           (res: HttpResponse<null>) => {
@@ -97,6 +97,23 @@ export class AuthService {
           }
         )
       )
+  }
+
+  setPassword(newPassword: string): Observable<HttpResponse<null> | HttpErrorResponse> {
+    const data = {
+      password: newPassword
+    };
+    return this.http.post(`${API_URL}/api/auth/change-password`, data)
+    .pipe(
+      map(
+        (res: HttpResponse<null>) => {
+          return res;
+        }, 
+        (err: HttpErrorResponse) => {
+          return err; 
+        }
+      )
+    )
   }
 
   loadUser(): Observable<User | HttpErrorResponse> {

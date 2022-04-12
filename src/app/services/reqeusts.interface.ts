@@ -27,6 +27,10 @@ export interface ValidateTokenSuccessResponse {
     email: string; 
 }
 
+export interface TokenValidationResponse {
+    token: string;
+}
+
 export interface RegisterUserRequest {
     email: string; 
     password: string; 
