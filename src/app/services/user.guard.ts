@@ -1,5 +1,4 @@
-import { HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/internal/operators/take';
@@ -14,10 +13,10 @@ import { UserStateService } from './user-state.service';
 })
 export class UserGuard implements CanActivate {
   constructor(
-    private _userStateService: UserStateService,
-    private _appStateService: AppStateService,
-    private _authService: AuthService,
-    private _router: Router,
+    @Inject(UserStateService) private _userStateService: UserStateService,
+    @Inject(AppStateService) private _appStateService: AppStateService,
+    @Inject(AuthService) private _authService: AuthService,
+    @Inject(Router) private _router: Router,
   ) { }
 
   canActivate(

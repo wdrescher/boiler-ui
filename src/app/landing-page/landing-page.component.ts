@@ -155,7 +155,7 @@ export class LandingPageComponent implements OnInit {
     if (this.formGroup.valid) {
       this.isLoading = true;
       if (this.isLogin) {
-        window.analytics.track('click:login');
+        
         this.loginError = '';
         const username = this.formGroup.controls.username.value.toLowerCase();
         const password = this.formGroup.controls.password.value;
@@ -181,7 +181,7 @@ export class LandingPageComponent implements OnInit {
         );
       }
       else if (this.isSignup) {
-        window.analytics.track('click:signup');
+        
         const controls = this.formGroup.controls;
         let username = controls["username"].value; 
         let password = controls["password"].value;
@@ -194,7 +194,7 @@ export class LandingPageComponent implements OnInit {
         .pipe(take(1))
         .subscribe(
           () => {
-            window.analytics.track("new user")
+            
             this.authService.attemptLogin(username, password)
             .pipe(take(1))
             .subscribe(
@@ -223,7 +223,7 @@ export class LandingPageComponent implements OnInit {
         )
       }
       else if (this.pageState === LandingPageState.FORGOT_PASSWORD) {
-        window.analytics.track('click:forgot');
+        
         const email = this.formGroup.controls.username.value;
         this.authService.forgotPassword(email)
           .pipe(take(1))
@@ -242,7 +242,7 @@ export class LandingPageComponent implements OnInit {
           )
       }
       else if (this.pageState === LandingPageState.RESET_PASSWORD) {
-        window.analytics.track('click:reset password');
+        
         const password = this.formGroup.controls.password.value;
         // this.authService.resetPassword(this._token, password)
         //   .pipe(take(1))
@@ -263,7 +263,7 @@ export class LandingPageComponent implements OnInit {
         //   )
       }
       else if (this.pageState === LandingPageState.SET_PASSWORD) {
-        window.analytics.track("set password"); 
+        
         let password = this.formGroup.controls["password"].value; 
         let email = this.cookieService.get(AWAITING_VERIFICATION_KEY);
         this.authService.setPassword(password)

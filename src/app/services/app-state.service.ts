@@ -7,8 +7,6 @@ import { Subject } from 'rxjs';
 export class AppStateService {
   private _displayErrorModal: boolean = false; 
 
-  $resetUploadModal = new Subject<boolean>(); 
-  
   constructor() { }
   
   toggleErrorModal(): void {

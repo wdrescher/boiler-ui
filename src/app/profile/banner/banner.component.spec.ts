@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { BannerComponent } from './banner.component';
 
@@ -8,7 +10,9 @@ describe('BannerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BannerComponent ]
+      imports: [HttpClientModule],
+      declarations: [ BannerComponent ], 
+      providers: [FormBuilder]
     })
     .compileComponents();
   }));
